@@ -1,34 +1,15 @@
 package com;
 
-import com.dto.Car;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.service.DemoService;
 import junit.framework.TestCase;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SampleServiceTest extends TestCase {
-    @Autowired
-    private DemoService demoService;
 
-    @Test
-    public void test1() {
-        Car car = Car.create(Car::new);
-        List<Car> cars = Lists.newArrayList(car);
-        cars.forEach(Car::collide);
-        cars.forEach(Car::repair);
-        cars.forEach(car::follow);
-
-        List<String> names = Lists.newArrayList("test1", "test2", "test3");
-        names.forEach(System.out::println);
-    }
 
     @Test
     public void testReverseWordsInString() {

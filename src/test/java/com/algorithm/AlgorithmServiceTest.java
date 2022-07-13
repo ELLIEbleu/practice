@@ -4,8 +4,6 @@ import com.google.common.collect.Lists;
 import junit.framework.TestCase;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.hadoop.yarn.webapp.hamlet.Hamlet;
-import org.apache.spark.util.CollectionsUtils;
 import org.junit.Test;
 
 import java.io.*;

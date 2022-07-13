@@ -1,8 +1,6 @@
 package com.concurrent;
 
 import org.apache.commons.lang3.concurrent.*;
-import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
-
 import java.util.concurrent.TimeUnit;
 
 public class CircuitBreakerTest {

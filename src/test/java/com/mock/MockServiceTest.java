@@ -10,9 +10,9 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
+import static java.util.Objects.hash;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
-import static org.springframework.data.mongodb.core.mapping.ShardKey.hash;
 
 public class MockServiceTest {
 

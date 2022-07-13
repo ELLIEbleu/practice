@@ -6,4 +6,5 @@ package com.practise;
  * @Date 2022/7/9 12:50
  **/
 public class PractiseService {
+
 }

@@ -1,7 +1,7 @@
 package com.concurrent;
 
-import avro.shaded.com.google.common.collect.Lists;
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
