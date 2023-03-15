@@ -212,6 +212,10 @@ public class DemoService {
         System.out.println(Collections.binarySearch(list, 19));
         Integer[] objs = new Integer[]{2, 3, 5, 7, 1};
         System.out.println(objs.length);
+
+        System.out.println("********************");
+        putIn(0,weights[0]);
+        System.out.println("max:"+ maxW);
     }
 
     /**
@@ -247,5 +251,35 @@ public class DemoService {
         Vector<Integer> vector = new Vector<>();
         return vector;
     }
+
+
+    /**
+     * 0-1背包问题
+     * 回溯算法实现
+     */
+
+    private static int n = 5;
+    private static int w = 9;
+    private static int maxW = Integer.MIN_VALUE;
+    private static int[] weights = new int[]{2,2,4,6,3};
+
+    private static boolean[][] mem = new boolean[5][10];
+
+    public static void putIn(int i, int cw){
+        if( cw == w || i == n){
+            if( cw > maxW){
+                maxW = cw;
+                return;
+            }
+        }
+        if( i+1< weights.length -1) {
+            putIn(i + 1, weights[i + 1]);
+        }
+
+        if( cw+ weights[i] <=w){
+            putIn(i+1,cw+weights[i]);
+        }
+    }
+
 
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @Author dan.he
  * @Date 2022/6/20 16:47
  **/
-@Component
+//@Component
 public class LiteAppConfig {
 
     @Bean

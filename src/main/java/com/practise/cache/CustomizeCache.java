@@ -1,4 +1,4 @@
-package com.practise;
+package com.practise.cache;
 
 
 import java.util.LinkedHashMap;
@@ -8,9 +8,9 @@ import java.util.LinkedHashMap;
  * @Author dan.he
  * @Date 2022/4/11 3:42 下午
  **/
-public class LRUCache {
+public class CustomizeCache {
     private LinkedHashMap<Integer,Integer> cache = new LinkedHashMap<>();
-    public LRUCache(int capacity) {
+    public CustomizeCache(int capacity) {
 
     }
 
@@ -28,32 +28,32 @@ public class LRUCache {
     }
 
     public static void main(String[] args) {
-        LRUCache lruCache = new LRUCache(2);
-        lruCache.put(1, 1);
-        lruCache.print();
+        CustomizeCache customizeCache = new CustomizeCache(2);
+        customizeCache.put(1, 1);
+        customizeCache.print();
 
-        lruCache.put(2, 2);
-        lruCache.print();
+        customizeCache.put(2, 2);
+        customizeCache.print();
 
-        int ret = lruCache.get(1);
+        int ret = customizeCache.get(1);
         System.out.println("ret:" + ret);
 
-        lruCache.put(3, 3);
-        lruCache.print();
+        customizeCache.put(3, 3);
+        customizeCache.print();
 
-        ret = lruCache.get(2);
+        ret = customizeCache.get(2);
         System.out.println("ret:" + ret);
 
-        lruCache.put(4, 4);
-        lruCache.print();
+        customizeCache.put(4, 4);
+        customizeCache.print();
 
-        ret = lruCache.get(1);
+        ret = customizeCache.get(1);
         System.out.println("ret:" + ret);
 
-        ret = lruCache.get(3);
+        ret = customizeCache.get(3);
         System.out.println("ret:" + ret);
 
-        ret = lruCache.get(4);
+        ret = customizeCache.get(4);
         System.out.println("ret:" + ret);
     }
 }

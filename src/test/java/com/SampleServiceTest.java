@@ -2,10 +2,20 @@ package com;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import com.practise.dto.Demo;
+import com.practise.dto.Person;
 import junit.framework.TestCase;
+import lombok.SneakyThrows;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SampleServiceTest extends TestCase {
@@ -211,4 +221,225 @@ public class SampleServiceTest extends TestCase {
 
         return fobio(n - 1) + fobio(n - 2);
     }
+
+    @Test
+    public void testIsSupportVersion(){
+        String version = "V8.0SP2,V8.0SP1,V8.1SP1,V7.0,V8.1";
+        String controlSupportVersion = StringUtils.isBlank(version) ? "" : version;
+        List<String> versions = Arrays.asList(controlSupportVersion.toUpperCase().split(","));
+        String envVersion = "V8.1Sp2";
+        envVersion =envVersion.toUpperCase();
+        boolean result =isSupportVersion(envVersion,versions);
+        Assert.assertEquals(true,result);
+
+        version = "V8.2,v8.1,V8.1sp2,v8.1sp1";
+        controlSupportVersion = StringUtils.isBlank(version) ? "" : version;
+        versions = Arrays.asList(controlSupportVersion.toUpperCase().split(","));
+        envVersion = "v8.1";
+        envVersion =envVersion.toUpperCase();
+        result =isSupportVersion(envVersion,versions);
+        Assert.assertEquals(true,result);
+
+        version= "";
+        controlSupportVersion = StringUtils.isBlank(version) ? "" : version;
+        versions = Arrays.asList(controlSupportVersion.toUpperCase().split(","));
+        envVersion = "v8.1";
+        envVersion =envVersion.toUpperCase();
+        result =isSupportVersion(envVersion,versions);
+        Assert.assertEquals(true,result);
+
+        version= "All";
+        controlSupportVersion = StringUtils.isBlank(version) ? "" : version;
+        versions = Arrays.asList(controlSupportVersion.toUpperCase().split(","));
+        envVersion = "v8.1";
+        envVersion =envVersion.toUpperCase();
+        result =isSupportVersion(envVersion,versions);
+        Assert.assertEquals(true,result);
+
+        version = "v8.1";
+        controlSupportVersion = StringUtils.isBlank(version) ? "" : version;
+        versions = Arrays.asList(controlSupportVersion.toUpperCase().split(","));
+        envVersion = "V7.1";
+        envVersion =envVersion.toUpperCase();
+        result =isSupportVersion(envVersion,versions);
+        Assert.assertEquals(false, result);
+
+        version = null;
+        controlSupportVersion = StringUtils.isBlank(version) ? "" : version;
+        versions = Arrays.asList(controlSupportVersion.toUpperCase().split(","));
+        envVersion = "V7.1";
+        envVersion =envVersion.toUpperCase();
+        result =isSupportVersion(envVersion,versions);
+        Assert.assertEquals(true, result);
+
+        version = "V8.2,v8.1,V8.1sp2,v8.1sp1";
+        controlSupportVersion = StringUtils.isBlank(version) ? "" : version;
+        versions = Arrays.asList(controlSupportVersion.toUpperCase().split(","));
+        envVersion = "v7.1";
+        envVersion =envVersion.toUpperCase();
+        result =isSupportVersion(envVersion,versions);
+        Assert.assertEquals(false,result);
+
+        version = "V8.2,v8.1,V8.1sp2,v8.1sp1";
+        controlSupportVersion = StringUtils.isBlank(version) ? "" : version;
+        versions = Arrays.asList(controlSupportVersion.toUpperCase().split(","));
+        envVersion = "V8.1sp2";
+        envVersion =envVersion.toUpperCase();
+        result =isSupportVersion(envVersion,versions);
+        Assert.assertEquals(true,result);
+
+        version = "v6.0,V8.2,v8.1,V8.1sp2,v8.1sp1";
+        controlSupportVersion = StringUtils.isBlank(version) ? "" : version;
+        versions = Arrays.asList(controlSupportVersion.toUpperCase().split(","));
+        envVersion = "v8.2";
+        envVersion =envVersion.toUpperCase();
+        result =isSupportVersion(envVersion,versions);
+        Assert.assertEquals(true,result);
+
+
+    }
+
+    public static boolean isSupportVersion(String envVersion, List<String> versions) {
+        if( CollectionUtils.isEmpty( versions) || versions.contains("ALL") || versions.contains(envVersion)){
+            return true;
+        }
+
+        Collections.sort(versions);
+        String latestVersion = versions.get(versions.size()-1);
+        return envVersion.compareTo(latestVersion) > 0 ? true : false;
+    }
+
+    public static void main(String[] args) {
+        String str = "";
+        String regex="[^\\/|<>:*?'&%$#]{1,245}";
+        Pattern p=Pattern.compile(regex);
+        Matcher m=p.matcher(str);
+        System.out.println("match:"+ m.matches());
+
+    }
+
+    @Test
+    public void test(){
+        List<Person> personList = Lists.newArrayList();
+        Person person = new Person();
+        person.setId(1234L);
+        person.setAge(12);
+        personList.add(person);
+
+        Person person2 = new Person();
+        person2.setId(11L);
+        person2.setAge(8);
+        personList.add(person2);
+
+        Person person3 = new Person();
+        person3.setId(12L);
+        person3.setAge(34);
+        personList.add(person3);
+
+        Person person4 = new Person();
+        person4.setId(12L);
+        person4.setAge(34);
+        personList.add(person4);
+
+        Person person5 = new Person();
+        person5.setId(12L);
+        person5.setAge(34);
+        personList.add(person5);
+
+        Person person6 = new Person();
+        person6.setId(12L);
+        person6.setAge(34);
+        personList.add(person6);
+
+        Person person7 = new Person();
+        person7.setId(12L);
+        person7.setAge(34);
+        personList.add(person7);
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                for (Person record : personList){
+                    System.out.println("当前线程:"+Thread.currentThread() +" id:"+ record.getId());
+                }
+                personList.sort(Comparator.comparingInt(Person::getAge));
+            }
+        };
+
+        for (int i=0 ; i<3 ;++i){
+            Thread thread = new Thread(runnable,"线程"+i);
+            thread.start();
+        }
+    }
+
+
+    @Test
+    public void test2(){
+        List<Person> list = Lists.newArrayList();
+        Person person = new Person();
+        person.setId(1234L);
+        person.setAge(12);
+
+        list.add(person);
+        Person person2 = new Person();
+        person2.setId(11L);
+        person2.setAge(8);
+        list.add(person2);
+        Person person3 = new Person();
+        person3.setId(12L);
+        person3.setAge(34);
+        list.add(person3);
+
+        Person person4 = new Person();
+        person4.setId(12L);
+        person4.setAge(34);
+        list.add(person4);
+
+        Person person5 = new Person();
+        person5.setId(12L);
+        person5.setAge(34);
+        list.add(person5);
+
+        Person person6 = new Person();
+        person6.setId(12L);
+        person6.setAge(34);
+        list.add(person6);
+
+        Person person7 = new Person();
+        person7.setId(12L);
+        person7.setAge(34);
+        list.add(person7);
+
+        Thread thread1 = new Thread(new sortRunner(list));
+        Thread thread2 = new Thread(new sortRunner(list));
+        Thread thread3 = new Thread(new sortRunner(list));
+
+        thread1.start();
+        thread2.start();
+        thread3.start();
+
+
+    }
+
+    class sortRunner implements Runnable {
+
+        public sortRunner(List<Person> list) {
+            this.list = list;
+        }
+
+        List<Person> list;
+
+        @Override
+        public void run() {
+
+//            Collections.sort(list);
+
+            list.stream().sorted(Comparator.comparingInt(Person::getAge));
+            list.sort(Comparator.comparingInt(Person::getAge));
+            System.out.println(Thread.currentThread().getName() + " 执行完毕");
+
+        }
+    }
+
 }
